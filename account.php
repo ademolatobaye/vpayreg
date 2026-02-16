@@ -32,9 +32,9 @@
 
             include("db_conn.php");
             date_default_timezone_set("Africa/Lagos");
-            $rand = rand(1000,9999);
+            $num = rand(1000,9999);
             $today = date("dmy");
-            $ID = $rand . $today;
+            $ID = $num . $today;
             error_reporting(E_ALL);
             if(isset($_REQUEST["submit"])){
                 $fullname = $_REQUEST["fullname"];
@@ -87,10 +87,10 @@
                 <input type="hidden" id="uin" name= "uin" value= "<?php echo"$ID" ?>" required> <br><br>
 
                 <label for="">PASSWORD</label> <br>
-                <input type="password" placeholder="Enter your password" id="password" oninput="check()" name= "password" required> <br><br>
+                <input type="password" placeholder="Enter your password" id="password" oninput="return check()" name= "password" required> <br><br>
 
                 <label for="">CONFIRM PASSWORD</label> <br>
-                <input type="password" placeholder="Confirm your passsword" id="regpassword" oninput="check()" name= "regpassword" required>
+                <input type="password" placeholder="Confirm your passsword" id="regpassword" oninput="return check()" name= "regpassword" required>
                 <span id="error"></span> <br><br>
 
                 <button type="submit" name= "submit" onclick= "return confirm('Are you sure to create your account?')">SUBMIT</button>
@@ -105,14 +105,43 @@
     let password = document.getElementById("password").value;
     let regpassword = document.getElementById("regpassword").value;
 
-    if(!regpassword == password){
+    if(regpassword !== password){
         document.getElementById("error").textContent = `Password is incorrect!`;
         document.getElementById("error").style.color = `red`;
+        return false;
     }else{
         document.getElementById("error").textContent = `Password matches correctly!`;
         document.getElementById("error").style.color = `green`;
+        return true;
     }
 }
+            </script>
+
+            <script>
+
+                function myform(){
+    let name = document.getElementById("fullname").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if(name == "" || name == null){
+        alert("Fullname cannot be empty!");
+        return false;
+    }
+    
+    if(email == "" || email == null){
+        alert("Email cannot be empty!");
+        return false;
+    }
+
+    if(password == "" || password == null){
+        alert("Password cannot be empty!");
+        return false;
+    }
+
+    alert(`Dear ${name}, your registered email address is ${email} while your password is ${password}.`);
+}
+
             </script>
 
         </div>
